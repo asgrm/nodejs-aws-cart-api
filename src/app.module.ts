@@ -24,6 +24,7 @@ import { Order } from './order/entities/Order'
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
       entities: [Product, CartItem, Cart, Order],
+      // !uncomment this during development
       // synchronize: true,
       logging: true,
       ssl: {
