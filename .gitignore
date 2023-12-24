@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+.env
+/cdk.out
+
 # Logs
 logs
 *.log
