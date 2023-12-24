@@ -1,0 +1,166 @@
+openapi: 3.0.3
+info:
+  title: Swagger Petstore - OpenAPI 3.0
+  description: |-
+    Cart Service for [RS AWS course](https://github.com/rolling-scopes-school/aws).
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: https://4r49p5k8b9.execute-api.eu-west-1.amazonaws.com/api
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://rm5iv9sh3g.execute-api.eu-west-1.amazonaws.com
+tags:
+  - name: Cart
+    description: Cart related endpoints
+paths:
+  /api/profile/cart:
+    get:
+      tags:
+        - Cart
+      summary: Get cart by given user (retrieved from basic auth token)
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cart"
+    put:
+      tags:
+        - Cart
+      summary: Cart update
+      requestBody:
+        description: product to be added or updatedinto cart
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CartItem"
+      responses:
+        "200":
+          description: successful operation
+    delete:
+      tags:
+        - Cart
+      summary: Delete Cart
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DeleteResponse"
+
+  /checkout:
+    get:
+      tags:
+        - Cart
+      summary: Checkout
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DeleteResponse"
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 200
+        message:
+          type: string
+          example: "OK"
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              example: "bf67ec4b-b10c-48c5-9345-fc73c48abb57"
+            total:
+              type: number
+              example: 5
+            user_id:
+              type: string
+              example: "test_user_1"
+            status:
+              type: string
+              example: "OPEN"
+            created_at:
+              type: string
+              format: date-time
+              example: "2023-12-23T13:36:00.230Z"
+            updated_at:
+              type: string
+              format: date-time
+              example: "2023-12-23T13:36:05.280Z"
+            items:
+              type: array
+              items:
+                $ref: "#/components/schemas/Item"
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "bf67ec4b-b10c-48c5-9345-fc73c48aaa11"
+        count:
+          type: number
+          example: 6
+        product:
+          type: object
+          allOf:
+            - $ref: "#/components/schemas/Product"
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "bf67ec4b-b10c-48c5-9345-fc73c48abb57"
+        title:
+          type: string
+          example: "Amazing toy for everyone"
+        description:
+          type: string
+          example: "A stick"
+        price:
+          type: integer
+          example: 7.2
+    CartItem:
+      type: object
+      properties:
+        count:
+          type: number
+          example: 8
+        product:
+          type: object
+          allOf:
+            - $ref: "#/components/schemas/Product"
+    DeleteResponse:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 200
+        message:
+          type: string
+          example: "OK"
